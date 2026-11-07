@@ -1,8 +1,12 @@
 package main;
 
 public class TransaksiMotor extends LayananSPBU implements Pembayaran{
-	TransaksiMotor(String idTransaksi){
-		super(idTransaksi);
+	public TransaksiMotor(String idTransaksi, double jumlahLiter) {
+		super(idTransaksi, jumlahLiter);
+		if(getJumlahLiter() > 19.0) {
+			setJumlahLiter(19);
+			System.out.println("Peringatan (" + idTransaksi + "): Pengisian motor dibatasi maksimal 19 liter!");
+		}
 	}
 	
 	@Override
@@ -10,7 +14,7 @@ public class TransaksiMotor extends LayananSPBU implements Pembayaran{
 		double totalHarga = getJumlahLiter() * HARGA_PER_LITER;
 		if (uangBayar >= totalHarga) {
 			setStatusLunas(true);
-			System.out.println("Pengisian bensin motor berhasil! Kembalian: " + (uangBayar - totalHarga));
+			System.out.println("Pembayaran berhasil! Kembalian: " + (uangBayar -  totalHarga));
 		} else {
 			setStatusLunas(false);
 			System.out.println("Pembayaran tidak cukup! Kurang: " + (totalHarga - uangBayar));

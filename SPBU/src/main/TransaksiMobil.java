@@ -1,8 +1,16 @@
 package main;
 
 public class TransaksiMobil extends LayananSPBU implements Pembayaran, LayananTambahan{
+	public TransaksiMobil(String idTransaksi) {
+		super(idTransaksi);
+	}
+	
 	public TransaksiMobil(String idTransaksi, double jumlahLiter) {
-		super(idTransaksi,jumlahLiter);
+		super(idTransaksi, jumlahLiter);
+		if(getJumlahLiter() > 60.0) {
+			setJumlahLiter(60.0);
+			System.out.println("Peringatan (" + idTransaksi + "): Pengisian mobil dibatasi maksimal 60 liter!");
+		}
 	}
 	
 	@Override
@@ -31,6 +39,9 @@ public class TransaksiMobil extends LayananSPBU implements Pembayaran, LayananTa
 	
 	@Override
 	public void cekTekananAngin() {
+		if(getJumlahLiter() == 0.0) {
+			setStatusLunas(true);
+		}
 		System.out.println("Tekanan angin ban mobil diperiksa...");
 	}
 }
